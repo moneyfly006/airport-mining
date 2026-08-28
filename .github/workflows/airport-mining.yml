@@ -1,0 +1,82 @@
+name: Airport Mining & Collect
+
+# 机场列表采集 + 节点获取 主流程
+#
+# 流程（每 12 小时）：
+#   1. sspanel-mining 采集器（collector+classifier）：Google 搜索扫公网 SSPanel 站点
+#      → 产出 src/database/sspanel_hosts/classifier/mining_*.csv（尽力而为，Google 可能限制）
+#   2. collect_airports.py（本仓库聚合器）：
+#      - 拉取最新 CSV + 活跃 GitHub 源（hwanz 等）→ 域名聚合
+#      - 与 nodes/airport_registry.json 增量对比 → 新增入队
+#      - 白名单机场优先 + 新增机场排查（探测 SSPanel → CF/随机邮箱注册 → 拉节点）
+#      - 产出 nodes/scan_*_nodes.txt + 更新 registry
+#
+# Secrets（可选）：CF_API_TOKEN / CF_GLOBAL_KEY+CF_EMAIL / CF_EMAIL_DOMAIN
+#   （无凭据时注册降级为随机 163/126 邮箱）
+
+on:
+  schedule:
+    # 每 12 小时（UTC 02:30 / 14:30），错开整点高峰
+    - cron: "30 */12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: airport-mining
+  cancel-in-progress: false
+
+jobs:
+  mine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      TZ: "Asia/Shanghai"
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      CF_GLOBAL_KEY: ${{ secrets.CF_GLOBAL_KEY }}
+      CF_EMAIL: ${{ secrets.CF_EMAIL }}
+      CF_EMAIL_DOMAIN: ${{ secrets.CF_EMAIL_DOMAIN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyyaml
+
+      # Step 1: sspanel-mining 采集器（尽力而为；Google 限制时跳过不影响主流程）
+      - name: Run sspanel-mining collector + classifier
+        continue-on-error: true
+        run: |
+          cd src
+          timeout 900 python main.py mining --env=production --collector --classifier --source=local || true
+          cd ..
+          # 确认是否有新 CSV 产出
+          ls -t src/database/sspanel_hosts/classifier/mining_*.csv | head -3
+
+      # Step 2: 聚合器（核心：最新 CSV + 活跃源 → 增量对比 → 白名单扫描 → 节点）
+      - name: Run collect_airports.py (aggregate + incremental + scan)
+        run: |
+          python scripts/collect_airports.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add 'src/database/sspanel_hosts/classifier/mining_*.csv' \
+                  'nodes/*_nodes.txt' \
+                  'nodes/airport_registry.json' || true
+
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "airport mining update $(date -u '+%Y-%m-%d %H:%M') UTC"
+          git pull --rebase -X theirs origin main
+          git push

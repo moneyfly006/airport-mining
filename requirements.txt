@@ -1,0 +1,20 @@
+# {{< Scaffolding dependency >}}
+fire>=0.4.0
+
+# {{< Log system >}}
+loguru>=0.5.3
+
+# {{< Interface /Data cleaning >}}
+requests>=2.26.0
+beautifulsoup4>=4.10.0
+cloudscraper>=1.2.58
+bs4>=0.0.1
+
+# {{< Drive >}}
+# selenium>=4.1.0
+selenium>=4.13.0
+gevent>=21.8.0
+tqdm>=4.62.3
+pytz>=2021.3
+# webdriver_manager==3.5.2
+webdriver_manager>=4.0.2
