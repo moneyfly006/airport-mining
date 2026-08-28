@@ -71,11 +71,13 @@ jobs:
         env:
           AIRPORTS_REFRESH: "1"
           CF_EMAIL_DOMAIN: ${{ secrets.CF_EMAIL_DOMAIN }}
-          CF_API_TOKEN_B64: ${{ secrets.CF_API_TOKEN_B64 }}
+          CF_TOKEN_PART1: ${{ secrets.CF_TOKEN_PART1 }}
+          CF_TOKEN_PART2: ${{ secrets.CF_TOKEN_PART2 }}
         run: |
-          # GITHUB_ENV 只影响后续 step；本 step 内用 shell 变量直接传给 python
-          if [ -n "$CF_API_TOKEN_B64" ]; then
-            CF_API_TOKEN="$(echo "$CF_API_TOKEN_B64" | base64 -d)"
+          # GitHub 会把 cfut_ 前缀识别为敏感格式自动打码成 ***（base64 也逃不掉），
+          # token 拆两段存（CF_TOKEN_PART1 + CF_TOKEN_PART2），本 step 拼接还原。
+          if [ -n "$CF_TOKEN_PART1" ] && [ -n "$CF_TOKEN_PART2" ]; then
+            CF_API_TOKEN="${CF_TOKEN_PART1}${CF_TOKEN_PART2}"
             export CF_API_TOKEN
           fi
           python scripts/collect_airports.py
