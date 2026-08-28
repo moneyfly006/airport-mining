@@ -71,9 +71,12 @@ jobs:
         env:
           AIRPORTS_REFRESH: "1"
           CF_EMAIL_DOMAIN: ${{ secrets.CF_EMAIL_DOMAIN }}
+          CF_API_TOKEN_B64: ${{ secrets.CF_API_TOKEN_B64 }}
         run: |
-          if [ -n "${{ secrets.CF_API_TOKEN_B64 }}" ]; then
-            echo "CF_API_TOKEN=$(echo '${{ secrets.CF_API_TOKEN_B64 }}' | base64 -d)" >> "$GITHUB_ENV"
+          # GITHUB_ENV 只影响后续 step；本 step 内用 shell 变量直接传给 python
+          if [ -n "$CF_API_TOKEN_B64" ]; then
+            CF_API_TOKEN="$(echo "$CF_API_TOKEN_B64" | base64 -d)"
+            export CF_API_TOKEN
           fi
           python scripts/collect_airports.py
 
