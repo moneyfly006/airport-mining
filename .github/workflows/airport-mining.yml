@@ -81,5 +81,9 @@ jobs:
 
           git diff --cached --quiet && echo "No changes" && exit 0
           git commit -m "airport mining update $(date -u '+%Y-%m-%d %H:%M') UTC"
+          # 工作区可能有未暂存改动（pyc/缓存等），先 stash 再 rebase，避免
+          # "cannot pull with rebase: unstaged changes"
+          git stash push --include-untracked -m "ci-autostash" || true
           git pull --rebase -X theirs origin main
+          git stash pop || true
           git push
