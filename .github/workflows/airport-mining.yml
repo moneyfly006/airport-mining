@@ -64,15 +64,17 @@ jobs:
 
       # Step 2: 聚合器（核心：最新 CSV + 活跃源 → 增量对比 → 白名单扫描 → 节点）
       # AIRPORTS_REFRESH=1：强制重新抓取源，消费采集器刚产出的最新 CSV
-      # CF 邮箱注册：CF_API_TOKEN（cfut_ 只读即可，脚本自动 KV 直读收信）；
-      # 不传 CF_MAIL_STATE —— 该 state 的 auth_token 是 Worker API 密钥，
-      # 传入会让脚本误用为 CF API Token（400）。只有读 KV 权限的 token 更可靠。
+      # CF 邮箱注册：CF_API_TOKEN 用 base64 存储（CF_API_TOKEN_B64）——
+      # GitHub 会把 cfut_ 前缀识别为敏感格式自动打码成 ***，导致脚本收到损坏 token
+      # （本地正常 / CI 400 Invalid Authorization header）。CI 解码还原后注入。
       - name: Run collect_airports.py (aggregate + incremental + scan)
         env:
           AIRPORTS_REFRESH: "1"
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_EMAIL_DOMAIN: ${{ secrets.CF_EMAIL_DOMAIN }}
         run: |
+          if [ -n "${{ secrets.CF_API_TOKEN_B64 }}" ]; then
+            echo "CF_API_TOKEN=$(echo '${{ secrets.CF_API_TOKEN_B64 }}' | base64 -d)" >> "$GITHUB_ENV"
+          fi
           python scripts/collect_airports.py
 
       - name: Commit and push
