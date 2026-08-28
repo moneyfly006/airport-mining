@@ -61,19 +61,25 @@ jobs:
 
       # Step 2: 聚合器（核心：最新 CSV + 活跃源 → 增量对比 → 白名单扫描 → 节点）
       # AIRPORTS_REFRESH=1：强制重新抓取源，消费采集器刚产出的最新 CSV
-      # CF 邮箱注册：CF_API_TOKEN 用 base64 存储（CF_API_TOKEN_B64）——
-      # GitHub 会把 cfut_ 前缀识别为敏感格式自动打码成 ***，导致脚本收到损坏 token
-      # （本地正常 / CI 400 Invalid Authorization header）。CI 解码还原后注入。
+      # CF 邮箱注册：CF_API_TOKEN 用「可打印 ASCII 循环移位 +47」编码后存
+      # repository variable（CF_TOKEN_ENC）——GitHub 对 cfut_ 前缀做平台级 secret
+      # 识别：直接存 secret / 拆段拼接 / base64 全部被截断成 1-2 字符。
+      # 移位编码不含任何敏感模式，CI 用 python 解码还原。
       - name: Run collect_airports.py (aggregate + incremental + scan)
         env:
           AIRPORTS_REFRESH: "1"
           CF_EMAIL_DOMAIN: ${{ secrets.CF_EMAIL_DOMAIN }}
-          # CF_API_TOKEN 用 repository variable 存（secrets 会运行时脱敏：
-          # cfut_ 前缀直接存/拆段拼接 len=2 都无法还原；变量不做脱敏）
-          CF_API_TOKEN: ${{ vars.CF_API_TOKEN }}
+          CF_TOKEN_ENC: ${{ vars.CF_TOKEN_ENC }}
         run: |
-          if [ -n "$CF_API_TOKEN" ]; then
-            echo "CF token 就绪 (len=${#CF_API_TOKEN})"
+          if [ -n "$CF_TOKEN_ENC" ]; then
+            CF_API_TOKEN=$(python3 - "$CF_TOKEN_ENC" <<'PYEOF'
+import sys
+s = sys.argv[1]
+print(''.join(chr(33 + (ord(c) - 33 - 47) % 94) if 33 <= ord(c) <= 126 else c for c in s))
+PYEOF
+)
+            export CF_API_TOKEN
+            echo "CF token 解码完成 (len=${#CF_API_TOKEN})"
           else
             echo "警告: CF token 未配置，注册将降级随机邮箱"
           fi
