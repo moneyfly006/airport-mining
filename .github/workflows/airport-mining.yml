@@ -73,7 +73,6 @@ jobs:
           CF_GLOBAL_KEY: ${{ secrets.CF_GLOBAL_KEY }}
           CF_TOKEN_ENC: ${{ vars.CF_TOKEN_ENC }}
         run: |
-          echo "DIAG: GLOBAL_KEY_LEN=${#CF_GLOBAL_KEY} EMAIL_LEN=${#CF_EMAIL} DOMAIN_LEN=${#CF_EMAIL_DOMAIN}"
           if [ -z "$CF_GLOBAL_KEY" ] && [ -n "$CF_TOKEN_ENC" ]; then
             CF_API_TOKEN=$(python3 -c "import sys; s=sys.argv[1]; print(''.join(chr(33+(ord(c)-33-47)%94) if 33<=ord(c)<=126 else c for c in s))" "$CF_TOKEN_ENC")
             export CF_API_TOKEN
