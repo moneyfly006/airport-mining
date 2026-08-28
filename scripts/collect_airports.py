@@ -156,25 +156,11 @@ _LAST_CSV_NAME = ""
 
 
 def fetch_latest_sspanel_csv(api_dir_url: str) -> str:
-    """获取最新的 sspanel-mining CSV。
+    """通过 GitHub API 列出 classifier 目录，取文件名最新的 CSV 并下载。
 
-    优先读本仓库本地采集产物（CI 上 collector 刚生成的最新 CSV）；
-    本地没有时回退到 lkmvip 远程仓库（通过 GitHub API 列目录取最新）。
     文件命名 mining_<YYYY-MM-DD HH-MM-SS>.csv，按名称排序即时间序。
     """
     global _LAST_CSV_NAME
-
-    # 1) 本地优先：本仓库 src/database/sspanel_hosts/classifier/*.csv
-    local_dir = Path(__file__).resolve().parent.parent / "src" / "database" / "sspanel_hosts" / "classifier"
-    if local_dir.is_dir():
-        local_csvs = sorted(f.name for f in local_dir.glob("mining_*.csv"))
-        if local_csvs:
-            latest = local_csvs[-1]
-            _LAST_CSV_NAME = latest
-            print(f"  [sspanel-mining] 本地最新 CSV: {latest}")
-            return (local_dir / latest).read_text(encoding="utf-8", errors="replace")
-
-    # 2) 远程回退：lkmvip 仓库最新 CSV
     listing = json.loads(fetch_text(api_dir_url))
     csv_names = sorted(
         f["name"] for f in listing
@@ -190,7 +176,7 @@ def fetch_latest_sspanel_csv(api_dir_url: str) -> str:
         "https://raw.githubusercontent.com/lkmvip/sspanel-mining/main/"
         f"src/database/sspanel_hosts/classifier/{_up.quote(latest)}"
     )
-    print(f"  [sspanel-mining] 远程最新 CSV: {latest}")
+    print(f"  [sspanel-mining] 最新 CSV: {latest}")
     return fetch_text(raw_url)
 
 
