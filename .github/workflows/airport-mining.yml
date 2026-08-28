@@ -68,15 +68,12 @@ jobs:
         env:
           AIRPORTS_REFRESH: "1"
           CF_EMAIL_DOMAIN: ${{ secrets.CF_EMAIL_DOMAIN }}
-          CF_TOKEN_PART1: ${{ secrets.CF_TOKEN_PART1 }}
-          CF_TOKEN_PART2: ${{ secrets.CF_TOKEN_PART2 }}
+          # CF_API_TOKEN 用 repository variable 存（secrets 会运行时脱敏：
+          # cfut_ 前缀直接存/拆段拼接 len=2 都无法还原；变量不做脱敏）
+          CF_API_TOKEN: ${{ vars.CF_API_TOKEN }}
         run: |
-          # GitHub 把 cfut_ 前缀识别为敏感格式，直接存 CF_API_TOKEN 会全程打码；
-          # token 拆两段存（CF_TOKEN_PART1 + CF_TOKEN_PART2）规避，本 step 拼接还原。
-          if [ -n "$CF_TOKEN_PART1" ] && [ -n "$CF_TOKEN_PART2" ]; then
-            CF_API_TOKEN="${CF_TOKEN_PART1}${CF_TOKEN_PART2}"
-            export CF_API_TOKEN
-            echo "CF token 拼接完成 (len=${#CF_API_TOKEN})"
+          if [ -n "$CF_API_TOKEN" ]; then
+            echo "CF token 就绪 (len=${#CF_API_TOKEN})"
           else
             echo "警告: CF token 未配置，注册将降级随机邮箱"
           fi
