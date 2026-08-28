@@ -63,7 +63,10 @@ jobs:
           ls -t src/database/sspanel_hosts/classifier/mining_*.csv | head -3
 
       # Step 2: 聚合器（核心：最新 CSV + 活跃源 → 增量对比 → 白名单扫描 → 节点）
+      # AIRPORTS_REFRESH=1：强制重新抓取源，消费采集器刚产出的最新 CSV
       - name: Run collect_airports.py (aggregate + incremental + scan)
+        env:
+          AIRPORTS_REFRESH: "1"
         run: |
           python scripts/collect_airports.py
 

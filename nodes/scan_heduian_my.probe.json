@@ -1,0 +1,15 @@
+{
+ "name": "heduian.my",
+ "base": "https://heduian.my",
+ "probe": true,
+ "registered": true,
+ "login": true,
+ "note": "",
+ "probe_note": "{\"ret\":-1}",
+ "email_domain": "163.com",
+ "node_count": 20,
+ "link_count": 20,
+ "plan": "A",
+ "transfer_enable": 0,
+ "email": "hdfkxwqicscv3x@163.com"
+}

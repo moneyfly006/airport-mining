@@ -1,0 +1,15 @@
+{
+ "name": "xixicats.pw",
+ "base": "https://xixicats.pw",
+ "probe": true,
+ "registered": true,
+ "login": true,
+ "note": "",
+ "probe_note": "{\"ret\":-1}",
+ "email_domain": "outlook.com",
+ "node_count": 75,
+ "link_count": 75,
+ "plan": "A",
+ "transfer_enable": 0,
+ "email": "hd789y7ryvqtej@outlook.com"
+}
