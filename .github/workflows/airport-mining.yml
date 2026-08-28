@@ -72,12 +72,7 @@ jobs:
           CF_TOKEN_ENC: ${{ vars.CF_TOKEN_ENC }}
         run: |
           if [ -n "$CF_TOKEN_ENC" ]; then
-            CF_API_TOKEN=$(python3 - "$CF_TOKEN_ENC" <<'PYEOF'
-import sys
-s = sys.argv[1]
-print(''.join(chr(33 + (ord(c) - 33 - 47) % 94) if 33 <= ord(c) <= 126 else c for c in s))
-PYEOF
-)
+            CF_API_TOKEN=$(python3 -c "import sys; s=sys.argv[1]; print(''.join(chr(33+(ord(c)-33-47)%94) if 33<=ord(c)<=126 else c for c in s))" "$CF_TOKEN_ENC")
             export CF_API_TOKEN
             echo "CF token 解码完成 (len=${#CF_API_TOKEN})"
           else
