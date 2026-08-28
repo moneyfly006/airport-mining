@@ -64,10 +64,18 @@ jobs:
 
       # Step 2: 聚合器（核心：最新 CSV + 活跃源 → 增量对比 → 白名单扫描 → 节点）
       # AIRPORTS_REFRESH=1：强制重新抓取源，消费采集器刚产出的最新 CSV
+      # CF_MAIL_STATE：写入临时文件供脚本复用已部署 Worker（读信走 Worker API，
+      # 无需写权限的 CF API Token；CF_API_TOKEN 只读也够 KV 直读兜底）
       - name: Run collect_airports.py (aggregate + incremental + scan)
         env:
           AIRPORTS_REFRESH: "1"
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_EMAIL_DOMAIN: ${{ secrets.CF_EMAIL_DOMAIN }}
         run: |
+          if [ -n "${{ secrets.CF_MAIL_STATE }}" ]; then
+            echo '${{ secrets.CF_MAIL_STATE }}' > "$RUNNER_TEMP/cf_mail_state.json"
+            echo "CF_MAIL_STATE=$RUNNER_TEMP/cf_mail_state.json" >> "$GITHUB_ENV"
+          fi
           python scripts/collect_airports.py
 
       - name: Commit and push
