@@ -1,14 +1,14 @@
 {
  "version": 1,
- "updated_at": "2026-10-24T04:57:10+00:00",
+ "updated_at": "2026-10-24T16:13:19+00:00",
  "sources": {
   "builtin": {
-   "fetched_at": "2026-10-24T04:56:56+00:00",
+   "fetched_at": "2026-10-24T16:13:06+00:00",
    "domains": 1,
    "builtin": true
   },
   "jichang-tuijian": {
-   "fetched_at": "2026-10-24T04:56:56+00:00",
+   "fetched_at": "2026-10-24T16:13:06+00:00",
    "domains": [
     "happy.bigmess.org",
     "sleddc9.com"
@@ -17,7 +17,7 @@
    "csv": ""
   },
   "dijiajichang": {
-   "fetched_at": "2026-10-24T04:56:56+00:00",
+   "fetched_at": "2026-10-24T16:13:06+00:00",
    "domains": [
     "5.6bcloud.top",
     "666.66jc.top",
@@ -34,7 +34,7 @@
    "csv": ""
   },
   "xingjiabijichang": {
-   "fetched_at": "2026-10-24T04:56:56+00:00",
+   "fetched_at": "2026-10-24T16:13:06+00:00",
    "domains": [
     "666.subef.top",
     "ktmcloud.link",
@@ -50,7 +50,7 @@
    "csv": ""
   },
   "cheap-airports": {
-   "fetched_at": "2026-10-24T04:56:56+00:00",
+   "fetched_at": "2026-10-24T16:13:06+00:00",
    "domains": [
     "repostars.dev",
     "sink.cheapairports.dpdns.org"
@@ -59,7 +59,7 @@
    "csv": ""
   },
   "vpn-deep-test": {
-   "fetched_at": "2026-10-24T04:56:56+00:00",
+   "fetched_at": "2026-10-24T16:13:07+00:00",
    "domains": [
     "xn--5hqx9equq.com",
     "xn--mes358a9urctx.com"
@@ -68,13 +68,13 @@
    "csv": ""
   },
   "airport-recommendations-2026": {
-   "fetched_at": "2026-10-24T04:56:56+00:00",
+   "fetched_at": "2026-10-24T16:13:07+00:00",
    "domains": [],
    "kind": "airports-json",
    "csv": ""
   },
   "telegram-group": {
-   "fetched_at": "2026-10-24T04:56:57+00:00",
+   "fetched_at": "2026-10-24T16:13:07+00:00",
    "domains": [
     "blog.rawstack.co",
     "lightningxvpn.com",
@@ -86,7 +86,7 @@
    "csv": ""
   },
   "sspanel-mining": {
-   "fetched_at": "2026-10-24T04:56:57+00:00",
+   "fetched_at": "2026-10-24T16:13:08+00:00",
    "domains": [
     "2233.wtf",
     "4thunter.net",
@@ -138,7 +138,7 @@
    "csv": "mining_2025-11-03 21-50-07.csv"
   },
   "hwanz-airports": {
-   "fetched_at": "2026-10-24T04:56:57+00:00",
+   "fetched_at": "2026-10-24T16:13:08+00:00",
    "domains": [
     "1.2beibei.com",
     "222.boostnet3.com",
@@ -153,6 +153,7 @@
     "alink.web3aff1.com",
     "caubba.yyssr.net",
     "cdn12.e-ix.com",
+    "dengta12.com",
     "haita.link",
     "honven.l49.net",
     "invite.wgetcloud.ltd",
@@ -191,7 +192,7 @@
     "builtin"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:57:10+00:00",
+   "last_scanned": "2026-10-24T16:13:19+00:00",
    "status": "qualified",
    "probe": true,
    "probe_note": "{\"ret\":-1}",
@@ -199,7 +200,7 @@
    "link_count": 22,
    "note": "",
    "registered": true,
-   "email_domain": "qq.com",
+   "email_domain": "163.com",
    "plan": "A"
   },
   "5.6bcloud.top": {
@@ -965,7 +966,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:58+00:00",
+   "last_scanned": "2026-10-24T16:13:09+00:00",
    "status": "failed",
    "sspanel_mining_label": "Email Validation",
    "probe": true,
@@ -981,7 +982,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:58+00:00",
+   "last_scanned": "2026-10-24T16:13:08+00:00",
    "status": "failed",
    "sspanel_mining_label": "Email Validation",
    "probe": true,
@@ -1045,7 +1046,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:58+00:00",
+   "last_scanned": "2026-10-24T16:13:09+00:00",
    "status": "failed",
    "sspanel_mining_label": "限制注册(邮箱)",
    "probe": true,
@@ -1093,7 +1094,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:58+00:00",
+   "last_scanned": "2026-10-24T16:13:09+00:00",
    "status": "failed",
    "sspanel_mining_label": "限制注册(邮箱)",
    "probe": true,
@@ -1125,7 +1126,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:58+00:00",
+   "last_scanned": "2026-10-24T16:13:09+00:00",
    "status": "failed",
    "sspanel_mining_label": "限制注册(邮箱)",
    "probe": true,
@@ -1141,7 +1142,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:58+00:00",
+   "last_scanned": "2026-10-24T16:13:09+00:00",
    "status": "failed",
    "sspanel_mining_label": "限制注册(邮箱)",
    "probe": true,
@@ -1221,7 +1222,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:58+00:00",
+   "last_scanned": "2026-10-24T16:13:09+00:00",
    "status": "failed",
    "sspanel_mining_label": "限制注册(邮箱)",
    "probe": true,
@@ -1253,7 +1254,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:59+00:00",
+   "last_scanned": "2026-10-24T16:13:11+00:00",
    "status": "qualified",
    "sspanel_mining_label": "Normal",
    "probe": true,
@@ -1262,7 +1263,7 @@
    "link_count": 29,
    "note": "",
    "registered": true,
-   "email_domain": "outlook.com",
+   "email_domain": "126.com",
    "plan": "A"
   },
   "mxwljsq.com": {
@@ -1464,7 +1465,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:59+00:00",
+   "last_scanned": "2026-10-24T16:13:09+00:00",
    "status": "failed",
    "sspanel_mining_label": "限制注册(邮箱)",
    "probe": true,
@@ -1579,7 +1580,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:59+00:00",
+   "last_scanned": "2026-10-24T16:13:09+00:00",
    "status": "failed",
    "sspanel_mining_label": "Email Validation",
    "probe": true,
@@ -1595,7 +1596,7 @@
     "sspanel-mining"
    ],
    "first_seen": "2026-08-28T03:07:10+00:00",
-   "last_scanned": "2026-10-24T04:56:59+00:00",
+   "last_scanned": "2026-10-24T16:13:09+00:00",
    "status": "failed",
    "sspanel_mining_label": "Email Validation",
    "probe": true,
@@ -2463,6 +2464,21 @@
    "node_count": null,
    "link_count": null,
    "note": "非 SSPanel vue 版: HTTP 404"
+  },
+  "dengta12.com": {
+   "name": "dengta12.com",
+   "base": "https://dengta12.com",
+   "sources": [
+    "hwanz-airports"
+   ],
+   "first_seen": "2026-10-24T16:13:08+00:00",
+   "last_scanned": "2026-10-24T16:13:09+00:00",
+   "status": "excluded",
+   "probe": false,
+   "probe_note": "<!DOCTYPE html><html lang=\"en\"><head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, ",
+   "node_count": null,
+   "link_count": null,
+   "note": "非 SSPanel vue 版: <!DOCTYPE html><html lang=\"en\"><head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, "
   }
  },
  "whitelist": [
